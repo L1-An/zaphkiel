@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.MetadataValue
 import org.bukkit.plugin.Plugin
 import taboolib.common.io.digest
+import taboolib.common.platform.function.console
 import taboolib.common.platform.function.severe
 import taboolib.common.util.asList
 import taboolib.common.util.unsafeLazy
@@ -79,7 +80,7 @@ class DefaultItem(override val config: ConfigurationSection, override val group:
                 val model = Zaphkiel.api().getItemManager().getModel(it)
                 if (model != null) {
                     // 获取model中的data
-                    val modelData = model.config.getConfigurationSection("data")?.getValues(false) ?: emptyMap()
+                    val modelData = model.config.getConfigurationSection("event.data")?.getValues(false) ?: emptyMap()
                     // 合并到并返回eventVars
                     vars.putAll(modelData)
                 } else {
