@@ -2,6 +2,7 @@ package ink.ptms.zaphkiel
 
 import ink.ptms.zaphkiel.impl.feature.openGroupMenu
 import ink.ptms.zaphkiel.impl.item.toItemStream
+import ink.ptms.zaphkiel.subcommand.*
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
@@ -25,83 +26,19 @@ object ZaphkielCommand {
     }
 
     @CommandBody
-    val list = subCommand {
-        dynamic("group") {
-            suggest { Zaphkiel.api().getItemManager().getGroupMap().keys.toList() }
-            execute<Player> { sender, _, argument ->
-                sender.openGroupMenu(Zaphkiel.api().getItemManager().getGroup(argument)!!)
-            }
-        }
-        execute<Player> { sender, _, _ -> sender.openGroupMenu() }
-    }
+    val list = CommandList
 
     @CommandBody
-    val give = subCommand {
-        dynamic(comment = "item") {
-            suggestion<CommandSender> { _, _ ->
-                Zaphkiel.api().getItemManager().getItemMap().keys.toList()
-            }
-            execute<Player> { sender, _, argument ->
-                Zaphkiel.api().getItemManager().giveItem(sender, argument)
-            }
-            dynamic(optional = true, comment = "player") {
-                suggestion<CommandSender> { _, _ ->
-                    Bukkit.getOnlinePlayers().map { it.name }
-                }
-                execute<CommandSender> { _, context, argument ->
-                    val player = Bukkit.getPlayerExact(argument)!!
-                    Zaphkiel.api().getItemManager().giveItem(player, context.argument(-1))
-                }
-                dynamic(optional = true, comment = "amount") {
-                    execute<CommandSender> { _, context, argument ->
-                        val player = Bukkit.getPlayerExact(context.argument(-1))!!
-                        val amount = argument.toIntOrNull() ?: 1
-                        Zaphkiel.api().getItemManager().giveItem(player, context.argument(-2), amount)
-                    }
-                }
-            }
-        }
-    }
+    val give = CommandGive
 
     @CommandBody
-    val serialize = subCommand {
-        execute<Player> { sender, _, _ ->
-            try {
-                val serializedItem = Zaphkiel.api().getItemSerializer().serialize(sender.itemInHand)
-                val json = serializedItem.toJson().replace('§', '&')
-                val zipped = json.toByteArray().zip()
-                notify(sender, "序列化: &f$json")
-                notify(sender, "明文: &f${json.length} &7字符, &f${json.toByteArray().size} &7字节 &a-> &7压缩后: &f${zipped.size} &7字节")
-            } catch (ex: Throwable) {
-                notify(sender, "无效的物品: $ex")
-            }
-        }
-    }
+    val serialize = CommandSerialize
 
     @CommandBody
-    val rebuild = subCommand {
-        execute<Player> { sender, _, _ ->
-            if (sender.itemInHand.isAir()) {
-                notify(sender, "请手持物品.")
-                return@execute
-            }
-            val itemStream = sender.itemInHand.toItemStream()
-            if (itemStream.isExtension()) {
-                sender.setItemInHand(itemStream.rebuildToItemStack(sender))
-                notify(sender, "成功.")
-            } else {
-                notify(sender, "不是 Zaphkiel 物品.")
-            }
-        }
-    }
+    val rebuild = CommandRebuild
 
     @CommandBody
-    val reload = subCommand {
-        execute<CommandSender> { sender, _, _ ->
-            Zaphkiel.api().reload()
-            notify(sender, "成功.")
-        }
-    }
+    val reload = CommandReload
 
     fun notify(sender: CommandSender, value: String) {
         sender.sendMessage("§c[Zaphkiel] §7${value.colored()}")
