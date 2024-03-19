@@ -65,7 +65,33 @@ class DefaultItem(override val config: ConfigurationSection, override val group:
 
     override val lockedData = getLockedData(HashMap(), data)
 
-    override val eventVars = config.getConfigurationSection("event.data")?.getValues(false) ?: emptyMap()
+    private val originVars = config.getConfigurationSection("event.data")?.getValues(false) ?: emptyMap()
+    override val eventVars = mergeModelData(originVars)
+
+    /**
+     * 将model中的data合并到eventVars
+     */
+    private fun mergeModelData(originVars: Map<String, Any?>) : Map<String, Any?> {
+        val vars = originVars.toMutableMap()
+        if (model.isNotEmpty()) {
+            // 遍历model，将model中的data合并到vars最后返回
+            model.forEach {
+                val model = Zaphkiel.api().getItemManager().getModel(it)
+                if (model != null) {
+                    // 获取model中的data
+                    val modelData = model.config.getConfigurationSection("data")?.getValues(false) ?: emptyMap()
+                    // 合并到并返回eventVars
+                    vars.putAll(modelData)
+                } else {
+                    severe("Model $it not found.")
+                }
+            }
+            return vars
+        } else {
+            // 若model为空则直接返回原vars
+            return vars
+        }
+    }
 
     override val eventMap by unsafeLazy {
         val field = HashMap<String, ItemEvent>()

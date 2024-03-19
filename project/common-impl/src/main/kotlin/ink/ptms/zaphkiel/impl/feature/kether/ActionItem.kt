@@ -12,14 +12,23 @@ import taboolib.module.nms.ItemTagData
 
 /**
  * item durability
+ * 获取物品当前耐久度
  * item max-durability
+ * 获取物品最大耐久度
  * item consume
+ * 消耗物品
  * item repair 1
+ * 修复一点耐久度
  * item damage 1
+ * 损坏一点耐久度
  * item update
+ * 更新物品
  * item data key
+ * 获取物品数据
  * item data key to 1
+ * 设置物品数据
  * item data key to ~
+ * 移除物品数据
  */
 @KetherParser(["item", "zitem"])
 private fun parserItem() = scriptParser {

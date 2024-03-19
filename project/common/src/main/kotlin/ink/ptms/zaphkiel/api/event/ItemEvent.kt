@@ -3,6 +3,7 @@ package ink.ptms.zaphkiel.api.event
 import ink.ptms.zaphkiel.api.ItemStream
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
+import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
@@ -145,7 +146,7 @@ class ItemEvent {
         val player = bukkitEvent.player
     }
 
-    class Pick(val itemStream: ItemStream, val bukkitEvent: PlayerPickupItemEvent) : BukkitProxyEvent() {
+    class Pick(val itemStream: ItemStream, val bukkitEvent: EntityPickupItemEvent) : BukkitProxyEvent() {
 
         override val allowCancelled: Boolean
             get() = false
@@ -163,7 +164,7 @@ class ItemEvent {
 
         val remaining = bukkitEvent.remaining
 
-        val player = bukkitEvent.player
+        val player = bukkitEvent.entity as Player
     }
 
     class Drop(val itemStream: ItemStream, val bukkitEvent: PlayerDropItemEvent) : BukkitProxyEvent() {

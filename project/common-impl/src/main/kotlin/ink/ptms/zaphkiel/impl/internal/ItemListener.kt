@@ -10,10 +10,12 @@ import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
 import org.bukkit.inventory.EquipmentSlot
+import taboolib.common.platform.Ghost
 import taboolib.common.platform.Schedule
 import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
@@ -25,6 +27,7 @@ import taboolib.platform.util.isNotAir
  * @author sky
  * @since 2020-04-20 12:37
  */
+@Suppress("DeprecatedCode", "unused")
 internal object ItemListener {
 
     @Schedule(period = 100, async = true)
@@ -208,6 +211,7 @@ internal object ItemListener {
      * 当玩家破坏方块时（Sandalphon）
      * 触发脚本
      */
+    @Ghost
     @SubscribeEvent(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onBreak(e: ink.ptms.sandalphon.module.impl.blockmine.event.BlockBreakEvent) {
         if (e.player.inventory.itemInMainHand.isAir()) {
@@ -249,7 +253,8 @@ internal object ItemListener {
      * 触发事件及脚本
      */
     @SubscribeEvent(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun onPickup(e: PlayerPickupItemEvent) {
+    fun onPickup(e: EntityPickupItemEvent) {
+        val player = e.entity as? Player ?: return
         if (e.item.itemStack.isNotAir()) {
             val itemStream = e.item.itemStack.toItemStream()
             if (itemStream.isVanilla()) {
@@ -261,7 +266,7 @@ internal object ItemListener {
             //     e.item.itemStack = event.itemStream.rebuildToItemStack(e.player)
             // }
             // 若脚本修改物品则写回事件
-            itemStream.getZaphkielItem().invokeScript(listOf("on_pick", "on_pickup", "onPick", "onPickUp"), e.player, e, itemStream)?.thenAccept {
+            itemStream.getZaphkielItem().invokeScript(listOf("on_pick", "on_pickup", "onPick", "onPickUp"), player, e, itemStream)?.thenAccept {
             //     if (it != null) {
             //         e.item.itemStack = it.itemStack
             //     }
