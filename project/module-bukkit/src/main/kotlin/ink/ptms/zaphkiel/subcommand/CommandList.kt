@@ -11,8 +11,8 @@ val CommandList = subCommand {
         suggestion<Player> { _, _ ->
             Zaphkiel.api().getItemManager().getGroupMap().keys.toList()
         }
-        execute<Player> { sender, _, argument ->
-            sender.openGroupMenu(Zaphkiel.api().getItemManager().getGroup(argument)!!)
+        execute<Player> { sender, ctx, _ ->
+            sender.openGroupMenu(Zaphkiel.api().getItemManager().getGroup(ctx["group"])!!)
         }
     }
     execute<Player> { sender, _, _ -> sender.openGroupMenu() }

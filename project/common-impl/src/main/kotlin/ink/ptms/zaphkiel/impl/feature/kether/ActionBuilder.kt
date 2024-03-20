@@ -4,6 +4,7 @@ import ink.ptms.zaphkiel.api.event.Editable
 import ink.ptms.zaphkiel.api.event.ItemReleaseEvent
 import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
+import taboolib.common.platform.function.console
 import taboolib.common5.cint
 import taboolib.library.xseries.parseToMaterial
 import taboolib.module.kether.KetherParser
@@ -23,33 +24,37 @@ private fun parserCancel() = scriptParser {
 
 @KetherParser(["preset", "build"], namespace = "zaphkiel-build")
 private fun parserPreset() = combinationParser {
-    it.group(symbol(), text(), command("to", then = text()).option()).apply(it) { action, a1, a2 ->
+    it.group(
+        symbol(),
+        text(),
+        command("to", then = text()).option()
+    ).apply(it) { action, value, text ->
         now {
             when (action) {
                 // 名称
                 "name" -> {
-                    a2 ?: error("missing value for preset name $a1")
+                    text ?: error("missing value for preset name $value")
                     val itemEvent = itemEvent<Event>()
                     if (itemEvent is Editable) {
-                        itemEvent.addName(a1, a2)
+                        itemEvent.addName(value, text)
                     } else {
                         error("It cannot be modified in this event")
                     }
                 }
                 // 描述
                 "lore" -> {
-                    a2 ?: error("missing value for preset name $a1")
+                    text ?: error("missing value for preset name $value")
                     val itemEvent = itemEvent<Event>()
                     if (itemEvent is Editable) {
-                        itemEvent.addLore(a1, a2)
+                        itemEvent.addLore(value, text)
                     } else {
                         error("It cannot be modified in this event")
                     }
                 }
                 // 图标（材质）
-                "icon", "material" -> itemEvent<ItemReleaseEvent>().icon = a1.parseToMaterial()
+                "icon", "material" -> itemEvent<ItemReleaseEvent>().icon = value.parseToMaterial()
                 // 附加值
-                "data", "damage" -> itemEvent<ItemReleaseEvent>().data = a1.cint
+                "data", "damage" -> itemEvent<ItemReleaseEvent>().data = value.cint
                 // 其他
                 else -> error("unknown preset action $action")
             }

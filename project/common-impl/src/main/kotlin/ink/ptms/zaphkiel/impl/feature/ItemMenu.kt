@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import taboolib.library.xseries.XMaterial
 import taboolib.module.ui.openMenu
-import taboolib.module.ui.type.Linked
+import taboolib.module.ui.type.PageableChest
 import taboolib.platform.util.Slots
 import taboolib.platform.util.buildItem
 import taboolib.platform.util.modifyLore
@@ -25,7 +25,7 @@ fun Player.openGroupMenu(parent: Group? = null) {
     // 播放音效
     playSound(location, Sound.UI_BUTTON_CLICK, 1f, 2f)
     // 打开页面
-    openMenu<Linked<MenuItem>>("Zaphkiel Items (Page %p)") {
+    openMenu<PageableChest<MenuItem>>("Zaphkiel Items (Page %p)") {
         rows(6)
         slots(Slots.CENTER)
         elements {
@@ -45,16 +45,28 @@ fun Player.openGroupMenu(parent: Group? = null) {
         // 翻页
         setNextPage(51) { _, hasNextPage ->
             if (hasNextPage) {
-                buildItem(XMaterial.SPECTRAL_ARROW) { name = "§7Next" }
+                buildItem(XMaterial.SPECTRAL_ARROW) { name = "§aNext" }
             } else {
                 buildItem(XMaterial.ARROW) { name = "§8Next" }
             }
         }
         setPreviousPage(47) { _, hasPreviousPage ->
             if (hasPreviousPage) {
-                buildItem(XMaterial.SPECTRAL_ARROW) { name = "§7Previous" }
+                buildItem(XMaterial.SPECTRAL_ARROW) { name = "§aPrevious" }
             } else {
                 buildItem(XMaterial.ARROW) { name = "§8Previous" }
+            }
+        }
+        // 返回
+        set(45, if (parent == null) {
+            buildItem(XMaterial.BARRIER) { name = "§cClose" }
+        } else {
+            buildItem(XMaterial.ARROW) { name = "§8Back" }
+        }) {
+            if (parent == null) {
+                this@openGroupMenu.closeInventory()
+            } else {
+                openGroupMenu(parent.parent)
             }
         }
     }
@@ -78,7 +90,7 @@ interface MenuItem {
                         add("§7ID: ${item.id}")
                     }
                     // 隐藏标签
-                    addItemFlags(*ItemFlag.values())
+                    addItemFlags(*ItemFlag.entries.toTypedArray())
                 }
             }
 

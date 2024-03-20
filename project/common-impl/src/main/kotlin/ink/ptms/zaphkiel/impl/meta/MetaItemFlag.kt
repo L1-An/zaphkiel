@@ -21,7 +21,7 @@ class MetaItemFlag(root: ConfigurationSection) : Meta(root) {
     }
 
     override fun drop(itemMeta: ItemMeta) {
-        itemMeta.removeItemFlags(*ItemFlag.values())
+        itemMeta.removeItemFlags(*ItemFlag.entries.toTypedArray())
     }
 
     override fun toString(): String {
