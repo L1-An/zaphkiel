@@ -1,3 +1,4 @@
+@file:Suppress("Deprecation", "unused", "MemberVisibilityCanBePrivate")
 package ink.ptms.zaphkiel.impl.feature
 
 import ink.ptms.zaphkiel.Zaphkiel

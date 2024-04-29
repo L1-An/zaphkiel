@@ -9,9 +9,9 @@ import org.bukkit.inventory.meta.SkullMeta
 import taboolib.common.platform.event.OptionalEvent
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.warning
-import taboolib.common.reflect.Reflex.Companion.getProperty
-import taboolib.common.reflect.Reflex.Companion.setProperty
 import taboolib.library.configuration.ConfigurationSection
+import taboolib.library.reflex.Reflex.Companion.getProperty
+import taboolib.library.reflex.Reflex.Companion.setProperty
 import java.util.*
 
 /**
@@ -19,6 +19,7 @@ import java.util.*
  * @since 2019-12-26 17:12
  */
 @MetaKey("skull")
+@Suppress("Deprecation")
 class MetaSkull(root: ConfigurationSection) : Meta(root) {
 
     val skullOwner = root.getString("meta.skull.owner")

@@ -6,8 +6,8 @@ import ink.ptms.zaphkiel.api.event.ItemBuildEvent
 import ink.ptms.zaphkiel.api.event.ItemReleaseEvent
 import ink.ptms.zaphkiel.impl.item.DefaultItemStreamGenerated
 import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.reflect.Reflex.Companion.invokeConstructor
 import taboolib.common.util.unsafeLazy
+import taboolib.library.reflex.Reflex.Companion.invokeConstructor
 import taboolib.module.chat.colored
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Type
@@ -16,6 +16,7 @@ import taboolib.module.configuration.Type
  * @author sky
  * @since 2019-12-26 9:53
  */
+@Suppress("Deprecation", "unused", "MemberVisibilityCanBePrivate")
 internal object ItemBuilder {
 
     val dropMeta by unsafeLazy {
