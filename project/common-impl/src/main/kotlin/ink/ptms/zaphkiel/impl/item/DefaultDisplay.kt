@@ -1,3 +1,4 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
 package ink.ptms.zaphkiel.impl.item
 
 import ink.ptms.zaphkiel.Zaphkiel

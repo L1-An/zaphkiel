@@ -17,7 +17,7 @@ import taboolib.platform.util.isAir
  * @author sky
  * @since 2019-12-15 22:39
  */
-@CommandHeader(name = "Zaphkiel", aliases = ["zl", "item"], permission = "*")
+@CommandHeader(name = "Zaphkiel", aliases = ["zl", "item", "zap"], permission = "*")
 object ZaphkielCommand {
 
     @CommandBody
