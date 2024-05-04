@@ -3,9 +3,12 @@ package ink.ptms.zaphkiel.impl.feature.hook
 import ink.ptms.um.event.MobDeathEvent
 import ink.ptms.um.event.MobSpawnEvent
 import ink.ptms.zaphkiel.Zaphkiel
+import ink.ptms.zaphkiel.api.event.ItemBuildEvent
+import ink.ptms.zaphkiel.api.event.ItemReleaseEvent
 import org.bukkit.Material
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
+import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.submit
@@ -39,7 +42,8 @@ internal object MythicHook {
             if (args.size == 3 && !random(Coerce.toDouble(args[2]))) {
                 return@forEach
             }
-            val item = Zaphkiel.api().getItemManager().generateItemStack(args[0], e.killer as? Player) ?: return@forEach
+            val player = e.killer as? Player ?: return
+            val item = Zaphkiel.api().getItemManager().generateItemStack(args[0], player, hashMapOf("@mob-level" to e.mob.level)) ?: return@forEach
             val amount = args.getOrElse(1) { "1" }.split("-").map { a -> Coerce.toInteger(a) }
             item.amount = random(amount[0], amount.getOrElse(1) { amount[0] })
             e.drop.add(item)

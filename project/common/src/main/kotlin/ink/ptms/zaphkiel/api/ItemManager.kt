@@ -131,5 +131,5 @@ interface ItemManager {
     /**
      * 生成新的物品流并构建成 ItemStack
      */
-    fun generateItemStack(id: String, player: Player? = null): ItemStack?
+    fun generateItemStack(id: String, player: Player? = null, args: Map<String, Any?> = hashMapOf()): ItemStack?
 }

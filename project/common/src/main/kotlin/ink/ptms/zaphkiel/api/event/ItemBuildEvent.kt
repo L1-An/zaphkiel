@@ -23,7 +23,8 @@ class ItemBuildEvent {
         val player: Player?,
         val itemStream: ItemStream,
         val name: MutableMap<String, String>,
-        val lore: MutableMap<String, MutableList<String>>
+        val lore: MutableMap<String, MutableList<String>>,
+        val args: MutableMap<String, Any?> = hashMapOf()
     ) : BukkitProxyEvent(), Editable {
 
         val item = itemStream.getZaphkielItem()

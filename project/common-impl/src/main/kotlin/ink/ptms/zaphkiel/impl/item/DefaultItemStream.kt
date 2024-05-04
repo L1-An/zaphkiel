@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @author 坏黑
  * @since 2022/7/23 17:02
  */
+@Suppress("Deprecation")
 open class DefaultItemStream(sourceItem: ItemStack, sourceCompound: ItemTag = sourceItem.getItemTag()) : ItemStream() {
 
     val metadataList = ConcurrentHashMap<String, MutableMap<String, MetadataValue>>()

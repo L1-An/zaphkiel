@@ -26,6 +26,7 @@ import taboolib.platform.util.isAir
  * @author 坏黑
  * @since 2022/7/23 16:28
  */
+@Suppress("Deprecation")
 class DefaultItemSerializer : ItemSerializer {
 
     val air = DefaultSerializedItem("minecraft:air", 1, null, null)

@@ -139,7 +139,7 @@ class DefaultItemManager : ItemManager {
         return registeredItem[id]?.build(player)
     }
 
-    override fun generateItemStack(id: String, player: Player?): ItemStack? {
-        return registeredItem[id]?.build(player)?.toItemStack(player)
+    override fun generateItemStack(id: String, player: Player?, args: Map<String, Any?>): ItemStack? {
+        return registeredItem[id]?.build(player, args)?.toItemStack(player)
     }
 }

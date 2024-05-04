@@ -130,24 +130,24 @@ class DefaultItem(override val config: ConfigurationSection, override val group:
         return build(player).toItemStack(player)
     }
 
-    override fun build(player: Player?): ItemStream {
-        return build(player) {}
+    override fun build(player: Player?, args: Map<String, Any?>): ItemStream {
+        return build(player, args) {}
     }
 
-    override fun build(player: Player?, prepareCallback: Consumer<ItemStream>): ItemStream {
+    override fun build(player: Player?, args: Map<String, Any?>, prepareCallback: Consumer<ItemStream>): ItemStream {
         val itemStream = DefaultItemStreamGenerated(icon.clone(), name.toMutableMap(), lore.toMutableMap())
         val compound = itemStream.sourceCompound.computeIfAbsent("zaphkiel") { ItemTag() }.asCompound()
         compound[ItemKey.ID.key] = ItemTagData(id)
         compound[ItemKey.DATA.key] = Translator.toItemTag(ItemTag(), data)
         prepareCallback.accept(itemStream)
-        return build(player, itemStream)
+        return build(player, itemStream, args)
     }
 
-    override fun build(player: Player?, itemStream: ItemStream): ItemStream {
+    override fun build(player: Player?, itemStream: ItemStream, args: Map<String, Any?>): ItemStream {
         val pre = if (itemStream is DefaultItemStreamGenerated) {
-            ItemBuildEvent.Pre(player, itemStream, itemStream.name, itemStream.lore)
+            ItemBuildEvent.Pre(player, itemStream, itemStream.name, itemStream.lore, args.toMutableMap())
         } else {
-            ItemBuildEvent.Pre(player, itemStream, name.toMutableMap(), lore.toMutableMap())
+            ItemBuildEvent.Pre(player, itemStream, name.toMutableMap(), lore.toMutableMap(), args.toMutableMap())
         }
         if (pre.call()) {
             // 设置数据

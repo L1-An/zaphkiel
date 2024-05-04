@@ -131,17 +131,17 @@ abstract class Item : Metadatable {
     /**
      * 构建新的物品流
      */
-    abstract fun build(player: Player?): ItemStream
+    abstract fun build(player: Player?, args: Map<String, Any?> = hashMapOf()): ItemStream
 
     /**
      * 构建新的物品流
      */
-    abstract fun build(player: Player?, prepareCallback: Consumer<ItemStream>): ItemStream
+    abstract fun build(player: Player?, args: Map<String, Any?> = hashMapOf(), prepareCallback: Consumer<ItemStream>): ItemStream
 
     /**
-     * 基于已存在的 ItemSteam 构建物品流
+     * 基于已存在的 ItemSteam 构建物品流, 并在触发构建事件时传出参数
      */
-    abstract fun build(player: Player?, itemStream: ItemStream): ItemStream
+    abstract fun build(player: Player?, itemStream: ItemStream, args: Map<String, Any?> = hashMapOf()): ItemStream
 
     /**
      * 是否为相同的物品（判断 ID）
