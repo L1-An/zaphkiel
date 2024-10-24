@@ -27,7 +27,7 @@ private fun parserPreset() = combinationParser {
     it.group(
         symbol(),
         text(),
-        command("to", then = text()).option()
+        command("to", then = any()).option()
     ).apply(it) { action, value, text ->
         now {
             when (action) {
@@ -44,9 +44,16 @@ private fun parserPreset() = combinationParser {
                 // 描述
                 "lore" -> {
                     text ?: error("missing value for preset name $value")
+                    println(text)
                     val itemEvent = itemEvent<Event>()
                     if (itemEvent is Editable) {
-                        itemEvent.addLore(value, text)
+                        if (text is List<*>) {
+                            itemEvent.addLore(value, text.map { it.toString() })
+                            println("text is list")
+                        } else {
+                            itemEvent.addLore(value, text)
+                            println("text is single line")
+                        }
                     } else {
                         error("It cannot be modified in this event")
                     }

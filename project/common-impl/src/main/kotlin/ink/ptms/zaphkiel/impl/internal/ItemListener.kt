@@ -211,17 +211,17 @@ internal object ItemListener {
      * 当玩家破坏方块时（Sandalphon）
      * 触发脚本
      */
-    @Ghost
-    @SubscribeEvent(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun onBreak(e: ink.ptms.sandalphon.module.impl.blockmine.event.BlockBreakEvent) {
-        if (e.player.inventory.itemInMainHand.isAir()) {
-            return
-        }
-        val itemStream = e.player.inventory.itemInMainHand.toItemStream()
-        if (itemStream.isExtension()) {
-            itemStream.getZaphkielItem().invokeScript(listOf("on_block_break", "onBlockBreak"), e.player, e, itemStream)
-        }
-    }
+//    @Ghost
+//    @SubscribeEvent(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//    fun onBreak(e: ink.ptms.sandalphon.module.impl.blockmine.event.BlockBreakEvent) {
+//        if (e.player.inventory.itemInMainHand.isAir()) {
+//            return
+//        }
+//        val itemStream = e.player.inventory.itemInMainHand.toItemStream()
+//        if (itemStream.isExtension()) {
+//            itemStream.getZaphkielItem().invokeScript(listOf("on_block_break", "onBlockBreak"), e.player, e, itemStream)
+//        }
+//    }
 
     /**
      * 当玩家丢弃物品时

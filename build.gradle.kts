@@ -32,23 +32,23 @@ subprojects {
         compileOnly("org.apache.commons:commons-lang3:3.12.0")
         compileOnly("com.google.guava:guava:30.1.1-jre")
         compileOnly("com.google.code.gson:gson:2.8.8")
-        compileOnly("ink.ptms.core:v11904:11904:mapped")
-        compileOnly("ink.ptms.core:v11200:11200")
+        compileOnly("ink.ptms.core:v12004:12004:mapped")
+        compileOnly("ink.ptms.core:v12004:12004:universal")
         compileOnly(kotlin("stdlib"))
     }
 
     // 编译配置
     java {
         withSourcesJar()
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "17"
             freeCompilerArgs = listOf("-Xjvm-default=all", "-Xextended-compiler-checks")
         }
     }
