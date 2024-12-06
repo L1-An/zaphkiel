@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package ink.ptms.zaphkiel.impl.feature.kether
 
 import org.bukkit.entity.Player

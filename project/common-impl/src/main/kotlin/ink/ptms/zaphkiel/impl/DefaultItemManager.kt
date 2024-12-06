@@ -27,7 +27,7 @@ class DefaultItemManager : ItemManager {
     val registeredGroup = HashMap<String, Group>()
 
     val registeredMeta: MutableMap<String, Class<out Meta>> = runningClasses
-        .filter { it.isAnnotationPresent(MetaKey::class.java) }
+        .filter { it.hasAnnotation(MetaKey::class.java) }
         .filterIsInstance<Class<out Meta>>()
         .associateBy { c -> c.getAnnotation(MetaKey::class.java).value }
         .toMutableMap()

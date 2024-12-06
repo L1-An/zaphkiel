@@ -1,5 +1,5 @@
 dependencies {
-    taboo("ink.ptms:um:1.0.8")
+    taboo("ink.ptms:um:1.1.2")
 }
 
 taboolib {
@@ -7,6 +7,10 @@ taboolib {
         name(rootProject.name)
         contributors {
             name("坏黑")
+        }
+        dependencies {
+            name("MythicMobs").optional(true)
+            name("AttributePlus").optional(true)
         }
     }
     relocate("ink.ptms.um", "ink.ptms.zaphkiel.um")

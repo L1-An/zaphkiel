@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package ink.ptms.zaphkiel.impl.meta
 
 import ink.ptms.zaphkiel.item.meta.Meta
