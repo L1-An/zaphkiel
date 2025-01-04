@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
+    `maven-publish`
     id("io.izzel.taboolib") version "2.0.22"
     id("org.jetbrains.kotlin.jvm") version "1.9.22"
 }
@@ -13,6 +14,7 @@ subprojects {
     apply<JavaPlugin>()
     apply(plugin = "io.izzel.taboolib")
     apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "maven-publish")
 
     // TabooLib 配置
     taboolib {
@@ -37,6 +39,7 @@ subprojects {
         compileOnly("ink.ptms.core:v12004:12004:mapped")
         compileOnly("ink.ptms.core:v12004:12004:universal")
         compileOnly(kotlin("stdlib"))
+        compileOnly(fileTree("libs"))
     }
 
     // 编译配置
@@ -64,6 +67,25 @@ kotlin {
     sourceSets.all {
         languageSettings {
             languageVersion = "2.0"
+        }
+    }
+}
+
+subprojects
+    .filter { it.name != "project" && it.name != "plugin" }
+    .forEach { proj ->
+        proj.publishing { applyToSub(proj) }
+    }
+
+fun PublishingExtension.applyToSub(subProject: Project) {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = subProject.name
+            groupId = "ink.ptms.zaphkiel"
+            version = project.version.toString()
+            artifact(subProject.tasks["jar"])
+            artifact(subProject.tasks["sourcesJar"])
+            println("> Apply \"$groupId:$artifactId:$version\"")
         }
     }
 }

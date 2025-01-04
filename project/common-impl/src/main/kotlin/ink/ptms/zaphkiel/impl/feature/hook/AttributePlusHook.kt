@@ -4,15 +4,13 @@ import ink.ptms.zaphkiel.impl.item.toItemStream
 import org.bukkit.entity.Player
 import org.serverct.ersha.api.AttributeAPI
 import org.serverct.ersha.api.event.AttrUpdateAttributeEvent
-import org.serverct.ersha.attribute.data.AttributeData
 import taboolib.common.platform.Ghost
-import taboolib.common.platform.event.OptionalEvent
 import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.reflect.Reflex.Companion.getProperty
 import taboolib.common5.Coerce
 import taboolib.platform.util.isAir
 import taboolib.type.BukkitEquipment
 
+@Suppress("DuplicatedCode")
 internal object AttributePlusHook {
 
     @SubscribeEvent

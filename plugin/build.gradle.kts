@@ -24,4 +24,21 @@ tasks {
         // 打包子项目源代码
         rootProject.subprojects.forEach { from(it.sourceSets["main"].output) }
     }
+    kotlinSourcesJar {
+        // include subprojects
+        rootProject.subprojects.forEach { from(it.sourceSets["main"].allSource) }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = "Zaphkiel"
+            groupId = "ink.ptms.zaphkiel"
+            version = project.version.toString()
+            artifact(tasks["jar"])
+            artifact(tasks["kotlinSourcesJar"])
+            println("> Apply \"$groupId:$artifactId:$version\"")
+        }
+    }
 }

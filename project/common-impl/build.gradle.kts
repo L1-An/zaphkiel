@@ -11,4 +11,5 @@ dependencies {
     compileOnly("public:Tiphareth:1.0.0")
     compileOnly("ink.ptms:um:1.1.2")
     compileOnly("com.mojang:authlib:1.5.25")
+    compileOnly(fileTree("libs"))
 }
