@@ -44,15 +44,13 @@ private fun parserPreset() = combinationParser {
                 // 描述
                 "lore" -> {
                     text ?: error("missing value for preset name $value")
-                    println(text)
                     val itemEvent = itemEvent<Event>()
                     if (itemEvent is Editable) {
+                        // 如果是列表则分行添加
                         if (text is List<*>) {
                             itemEvent.addLore(value, text.map { it.toString() })
-                            println("text is list")
-                        } else {
+                        } else { // 反之则直接添加
                             itemEvent.addLore(value, text)
-                            println("text is single line")
                         }
                     } else {
                         error("It cannot be modified in this event")
