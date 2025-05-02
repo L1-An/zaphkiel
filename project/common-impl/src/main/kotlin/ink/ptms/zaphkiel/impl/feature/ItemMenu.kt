@@ -90,7 +90,7 @@ interface MenuItem {
                         add("§7ID: ${item.id}")
                     }
                     // 隐藏标签
-                    addItemFlags(*ItemFlag.entries.toTypedArray())
+                    addItemFlags(*ItemFlag.values())
                 }
             }
 

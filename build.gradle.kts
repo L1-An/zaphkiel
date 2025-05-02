@@ -7,7 +7,7 @@ plugins {
     java
     `maven-publish`
     id("io.izzel.taboolib") version "2.0.22"
-    id("org.jetbrains.kotlin.jvm") version "1.9.22"
+    id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
 subprojects {
@@ -61,14 +61,6 @@ subprojects {
 
 gradle.buildFinished {
     buildDir.deleteRecursively()
-}
-
-kotlin {
-    sourceSets.all {
-        languageSettings {
-            languageVersion = "2.0"
-        }
-    }
 }
 
 subprojects

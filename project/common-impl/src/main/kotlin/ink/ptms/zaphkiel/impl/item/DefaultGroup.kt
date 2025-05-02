@@ -53,7 +53,7 @@ data class DefaultGroup(
                     null
                 }
                 // 隐藏标签
-                addItemFlags(*ItemFlag.entries.toTypedArray())
+                addItemFlags(*ItemFlag.values())
             }
         }
 

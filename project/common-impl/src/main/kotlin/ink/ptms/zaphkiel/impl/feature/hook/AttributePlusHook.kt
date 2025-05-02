@@ -20,7 +20,7 @@ internal object AttributePlusHook {
         val sourceEntity = attributeData.sourceEntity
         if (sourceEntity is Player) {
             val attrData = AttributeAPI.getAttrData(sourceEntity)
-            val items = BukkitEquipment.entries.mapNotNull { it.getItem(sourceEntity) }
+            val items = BukkitEquipment.values().mapNotNull { it.getItem(sourceEntity) }
             items.forEachIndexed { index, item ->
                 AttributeAPI.takeSourceAttribute(attrData, "Zaphkiel.$index")
                 if (item.isAir()) {
