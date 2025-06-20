@@ -62,22 +62,3 @@ subprojects {
 gradle.buildFinished {
     buildDir.deleteRecursively()
 }
-
-subprojects
-    .filter { it.name != "project" && it.name != "plugin" }
-    .forEach { proj ->
-        proj.publishing { applyToSub(proj) }
-    }
-
-fun PublishingExtension.applyToSub(subProject: Project) {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            artifactId = subProject.name
-            groupId = "ink.ptms.zaphkiel"
-            version = project.version.toString()
-            artifact(subProject.tasks["jar"])
-            artifact(subProject.tasks["sourcesJar"])
-            println("> Apply \"$groupId:$artifactId:$version\"")
-        }
-    }
-}

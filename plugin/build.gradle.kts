@@ -32,12 +32,14 @@ tasks {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
-            artifactId = "Zaphkiel"
+        create<MavenPublication>("api") {
+            artifactId = "api"
             groupId = "ink.ptms.zaphkiel"
             version = project.version.toString()
-            artifact(tasks["jar"])
-            artifact(tasks["kotlinSourcesJar"])
+            artifact("${project.buildDir}/libs/${rootProject.name}-${rootProject.version}-api.jar")
+            artifact(tasks["kotlinSourcesJar"]) {
+                classifier = "sources"
+            }
             println("> Apply \"$groupId:$artifactId:$version\"")
         }
     }
